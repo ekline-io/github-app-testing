@@ -1,0 +1,120 @@
+---
+title: "UI Components for File Handling in Next.js"
+description: "Learn how to use the FileList and FileUpload components to manage file uploads and display uploaded files in your Next.js application."
+---
+
+## FileList Component
+
+The `FileList` component is designed to fetch and display a list of files that have been uploaded. It shows the file name, size, upload date, and provides actions to view or download the file. This component handles loading states, errors, and empty states gracefully.
+
+### Usage
+
+To use the `FileList` component, simply include it in your component tree. It does not require any props to function:
+
+```typescript
+import FileList from 'path/to/FileList';
+
+const MyComponent = () => {
+  return (
+    <div>
+      <h1>Uploaded Files</h1>
+      <FileList />
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+### Implementation
+
+The component fetches files from an API endpoint (`/api/upload`) on mount and whenever the `fetchFiles` function is invoked, such as through a retry button in the error state or a refresh button in the UI.
+
+Files are displayed in a table format, with each file's name, size (formatted in a human-readable format), upload date (formatted as `MM/DD/YYYY, HH:MM AM/PM`), and actions to view or download the file.
+
+## FileUpload Component
+
+The `FileUpload` component allows users to upload files either by dragging and dropping a file onto the component or by clicking the component to open a file selector dialog. It supports drag-and-drop interactions, displays upload progress, and handles errors.
+
+### Props
+
+- `onFileUpload`: A callback function that is called after a file is successfully uploaded. This can be used to refresh the list of uploaded files.
+
+### Usage
+
+Integrate the `FileUpload` component into your application by passing the `onFileUpload` callback:
+
+```typescript
+import FileUpload from 'path/to/FileUpload';
+
+const MyComponent = () => {
+  const handleFileUpload = () => {
+    // Refresh your file list or perform other actions after a file is uploaded
+  };
+
+  return (
+    <div>
+      <FileUpload onFileUpload={handleFileUpload} />
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+### Implementation
+
+The component uses an `<input type="file">` for file selection, which is triggered programmatically when the user clicks on the drop area. For drag-and-drop uploads, it listens for `dragOver`, `dragLeave`, and `drop` events.
+
+When files are dropped or selected, the component initiates an upload by sending a POST request to `/api/upload` with the file data. It visually indicates the upload progress and displays any errors that occur during the upload process.
+
+## Examples
+
+### Using FileList to display uploaded files
+
+This example demonstrates how to integrate the `FileList` component into your application to display a list of uploaded files:
+
+```typescript
+import FileList from 'path/to/FileList';
+
+const UploadedFiles = () => {
+  return (
+    <div>
+      <h2>Uploaded Files</h2>
+      <FileList />
+    </div>
+  );
+};
+
+export default UploadedFiles;
+```
+
+### Integrating the FileUpload component for uploading files
+
+This example shows how to use the `FileUpload` component to allow users to upload files, with a callback to refresh the file list upon successful upload:
+
+```typescript
+import FileUpload from 'path/to/FileUpload';
+import FileList from 'path/to/FileList';
+import { useState } from 'react';
+
+const FileManagement = () => {
+  const [key, setKey] = useState(0); // Used to force re-render
+
+  const refreshFileList = () => {
+    // Increment key to force re-render of FileList
+    setKey((prevKey) => prevKey + 1);
+  };
+
+  return (
+    <div>
+      <FileUpload onFileUpload={refreshFileList} />
+      <FileList key={key} />
+    </div>
+  );
+};
+
+export default FileManagement;
+```
+
+This documentation provides an overview of how to use the `FileList` and `FileUpload` components in your Next.js application to handle file uploads and display uploaded files.
