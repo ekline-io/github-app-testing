@@ -1,0 +1,49 @@
+---
+title: Configuring Next.js for File Uploads
+description: Learn how to configure your Next.js application to handle file uploads by modifying the next.config.js file.
+---
+
+## Configuring Next.js for File Uploads
+
+Handling file uploads in a Next.js application requires specific configuration to efficiently process and manage files. This guide will walk you through the necessary steps to configure your Next.js project for file uploads, focusing on modifying the `next.config.js` file to support this feature.
+
+### Why Configure Next.js for File Uploads?
+
+By default, Next.js does not include built-in support for handling file uploads in API routes. To enable this functionality, especially for larger files or more complex file handling scenarios, you need to adjust your Next.js configuration. This involves disabling the default body parser for API routes and including support for external packages that can process multipart/form-data, which is commonly used for uploading files from web forms.
+
+### Modifying next.config.ts for File Management
+
+To configure your Next.js application to handle file uploads, you need to make two primary changes to your `next.config.js` file:
+
+1. **Disable the Default Body Parser**: This step is crucial for allowing your API routes to handle incoming file data manually. By disabling the default body parser, you gain full control over processing the incoming request, which is necessary for handling multipart/form-data.
+
+2. **Include External Packages for Server Components**: If you're using server components or need to process file uploads in them, you must specify any external packages used for file handling in your Next.js configuration. This ensures that these packages are correctly treated as external dependencies and are not bundled unnecessarily with your client-side code.
+
+Here's how you can modify your `next.config.js` file to include these configurations:
+
+```typescript
+// next.config.ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ['formidable'],
+  },
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default nextConfig;
+```
+
+In this configuration:
+
+- The `serverComponentsExternalPackages` option under `experimental` is used to specify external packages, like `formidable`, that are used for parsing form data, including file uploads. This is particularly useful if you're leveraging Next.js's server components feature.
+- The `api.bodyParser: false` option disables the default body parser for API routes, allowing you to manually handle multipart/form-data in your API routes for file uploads.
+
+### Conclusion
+
+Configuring your Next.js application to handle file uploads requires careful adjustments to the default settings, particularly around how incoming requests are parsed and managed. By following the steps outlined above, you can set up your Next.js project to efficiently handle file uploads, paving the way for more interactive and feature-rich web applications.
+
+For more detailed examples of handling file uploads within your Next.js API routes, refer to our [File Upload Feature](/docs/nextjs/file-upload-feature.mdx) documentation.
