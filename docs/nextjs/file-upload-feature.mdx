@@ -1,0 +1,181 @@
+---
+title: Integrating File Upload and Management in Next.js
+description: Learn how to implement a file upload and management feature in your Next.js application, including API route setup, UI components, and configuration.
+---
+
+## Introduction
+
+This guide covers the implementation of a file upload and management feature in a Next.js application. You'll learn how to set up API routes for handling file uploads and listings, create UI components for uploading and displaying files, and configure your Next.js project to support these features.
+
+## Setup and Configuration
+
+Before diving into the code, ensure your Next.js project is set up correctly to handle file uploads and manage files. This involves configuring your Next.js environment, installing necessary dependencies, and setting up PostCSS for styling.
+
+### Dependencies
+
+First, install the required packages:
+
+```bash
+npm install formidable react react-dom next
+```
+
+For development dependencies:
+
+```bash
+npm install --save-dev @tailwindcss/postcss tailwindcss @types/react @types/react-dom @types/node @types/formidable typescript
+```
+
+### Next.js Configuration
+
+Modify your `next.config.js` to disable the default body parser for API routes and include formidable in server components:
+
+```javascript
+const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ['formidable'],
+  },
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default nextConfig;
+```
+
+### TypeScript Configuration
+
+Ensure your `tsconfig.json` is configured to work with Next.js and the installed types:
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+## API Routes for File Upload
+
+Create an API route to handle file uploads and listings. This involves parsing form data using formidable and storing the uploaded files.
+
+### Uploading Files
+
+In `app/api/upload/route.ts`, set up an endpoint to handle POST requests for file uploads:
+
+```typescript
+import { NextRequest, NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { IncomingForm } from 'formidable';
+
+export async function POST(req: NextRequest) {
+  // Implementation for handling file uploads
+}
+```
+
+### Listing Files
+
+Implement a GET method in the same file to list all uploaded files:
+
+```typescript
+export async function GET() {
+  // Implementation for listing files
+}
+```
+
+## UI Components for File Management
+
+Create React components to upload files and display the list of uploaded files.
+
+### FileUpload Component
+
+`app/components/FileUpload.tsx` handles file selection, drag-and-drop uploads, and displays upload progress:
+
+```typescript
+import { useState, useRef } from 'react';
+
+const FileUpload = ({ onFileUpload }: { onFileUpload: () => void }) => {
+  // Component implementation
+};
+
+export default FileUpload;
+```
+
+### FileList Component
+
+`app/components/FileList.tsx` fetches and displays a list of uploaded files:
+
+```typescript
+import { useState, useEffect } from 'react';
+
+const FileList = () => {
+  // Component implementation
+};
+
+export default FileList;
+```
+
+## Configuring TypeScript and PostCSS
+
+To ensure TypeScript and PostCSS are configured correctly, follow the setup instructions provided in the Setup and Configuration section. This includes setting up `tsconfig.json` and `postcss.config.mjs` for your project.
+
+## Using SVG Assets
+
+In your UI components, you may use SVG assets for icons and illustrations. Ensure these are correctly imported and used within your React components.
+
+## Examples
+
+### Setting up the file upload API route
+
+```typescript
+// In app/api/upload/route.ts
+export async function POST(req: NextRequest) {
+  // Logic for parsing form data and saving the uploaded file
+}
+```
+
+### Integrating the FileList and FileUpload components
+
+In your page component, integrate `FileList` and `FileUpload` to allow users to upload files and view the list of uploaded files:
+
+```typescript
+import FileUpload from './components/FileUpload';
+import FileList from './components/FileList';
+
+export default function Home() {
+  return (
+    <div>
+      <FileUpload onFileUpload={() => {/* Refresh file list */}} />
+      <FileList />
+    </div>
+  );
+}
+```
+
+### Configuring Next.js and TypeScript for the feature
+
+Ensure your `next.config.js` and `tsconfig.json` are configured as shown in the Setup and Configuration section to support file uploads and the use of TypeScript in your project.
+
+This guide provides a comprehensive overview of integrating a file upload and management feature in a Next.js application. By following these steps, you can implement a robust solution for handling file uploads, displaying uploaded files, and configuring your project to support these features.
