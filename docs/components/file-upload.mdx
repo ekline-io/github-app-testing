@@ -1,0 +1,77 @@
+---
+title: "FileUpload Component"
+description: "Documentation for the FileUpload component, detailing its usage and integration within the application."
+---
+
+## Component Overview
+
+The `FileUpload` component provides a user interface for uploading files via drag-and-drop or by selecting files through a file picker. It handles file selection, drag events, and displays upload progress. This component is designed to integrate seamlessly with an API endpoint for file uploads.
+
+## Props and Methods
+
+### Props
+
+- `onFileUpload`: A callback function that is triggered after a successful file upload. This function can be used to refresh the file list or perform other actions upon completion of the upload.
+
+### Methods
+
+- `handleDragOver(e: DragEvent<HTMLDivElement>)`: Handles the drag over event to provide visual feedback when a file is dragged over the upload area.
+- `handleDragLeave(e: DragEvent<HTMLDivElement>)`: Handles the drag leave event to reset the visual feedback when a file is dragged away from the upload area.
+- `handleDrop(e: DragEvent<HTMLDivElement>)`: Handles the drop event to process the file(s) dropped into the upload area.
+- `handleFileInputChange(e: ChangeEvent<HTMLInputElement>)`: Handles the change event for the file input to process the selected file(s).
+- `handleFiles(files: FileList)`: Processes the file(s) for upload, manages upload progress, and handles errors.
+- `openFileSelector()`: Opens the file picker dialog for selecting files manually.
+
+## Usage Examples
+
+### Basic Usage Example
+
+```typescript
+import FileUpload from './components/FileUpload';
+
+const App = () => {
+  const handleFileUpload = () => {
+    console.log('File uploaded successfully');
+    // Refresh file list or perform other actions
+  };
+
+  return (
+    <div>
+      <h1>Upload Your Files</h1>
+      <FileUpload onFileUpload={handleFileUpload} />
+    </div>
+  );
+};
+
+export default App;
+```
+
+### Advanced Configuration Example
+
+In this example, we demonstrate how to handle errors and customize the upload process further.
+
+```typescript
+import FileUpload from './components/FileUpload';
+
+const App = () => {
+  const handleFileUpload = () => {
+    console.log('File uploaded successfully');
+    // Additional logic after file upload
+  };
+
+  return (
+    <div>
+      <h1>Advanced File Upload</h1>
+      <FileUpload onFileUpload={handleFileUpload} />
+    </div>
+  );
+};
+
+export default App;
+```
+
+In this advanced example, you can extend the `handleFileUpload` function to include additional logic such as updating the UI or making further API calls after a successful upload.
+
+## Related Documentation
+
+For more information on the API endpoint used for file uploads, refer to the [Upload Route Documentation](./api/upload-route.mdx). This documentation provides details on the server-side handling of file uploads and expected request/response formats.
