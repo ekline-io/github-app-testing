@@ -1,0 +1,141 @@
+---
+title: "File Upload API Route"
+description: "Documentation for the API route handling file uploads, detailing implementation and usage."
+---
+
+## Overview
+
+The File Upload API Route allows developers to handle file uploads and retrieve uploaded files. This route is implemented using Next.js API routes and utilizes the `formidable` library to parse incoming form data.
+
+## Endpoint Details
+
+### POST `/api/upload`
+
+This endpoint handles file uploads. It expects a multipart form data request containing the file to be uploaded.
+
+#### Function Signature
+
+```typescript
+export async function POST(req: NextRequest): Promise<NextResponse>
+```
+
+#### Parameters
+
+- `req`: `NextRequest` - The incoming request object containing the file data.
+
+#### Returns
+
+- `NextResponse`: A JSON response indicating the success or failure of the upload, along with file details if successful.
+
+### GET `/api/upload`
+
+This endpoint retrieves a list of uploaded files with their details.
+
+#### Function Signature
+
+```typescript
+export async function GET(): Promise<NextResponse>
+```
+
+#### Returns
+
+- `NextResponse`: A JSON response containing a list of files with their names, paths, sizes, and creation dates.
+
+## Request and Response Formats
+
+### POST Request
+
+The request should be a multipart form data containing the file to be uploaded.
+
+### POST Response
+
+- **Success (200)**: Returns a JSON object with the uploaded file's details.
+
+  ```json
+  {
+    "success": true,
+    "file": {
+      "name": "example.jpg",
+      "size": 1024,
+      "path": "/uploads/example.jpg"
+    }
+  }
+  ```
+
+- **Failure (400)**: Returns a JSON object indicating no file was uploaded.
+
+  ```json
+  {
+    "success": false,
+    "message": "No file uploaded"
+  }
+  ```
+
+- **Error (500)**: Returns a JSON object indicating an error occurred during upload.
+
+  ```json
+  {
+    "success": false,
+    "message": "Error uploading file"
+  }
+  ```
+
+### GET Response
+
+- **Success (200)**: Returns a JSON object with a list of uploaded files.
+
+  ```json
+  {
+    "success": true,
+    "files": [
+      {
+        "name": "example.jpg",
+        "path": "/uploads/example.jpg",
+        "size": 1024,
+        "createdAt": "2023-10-01T12:00:00Z"
+      }
+    ]
+  }
+  ```
+
+- **Error (500)**: Returns a JSON object indicating an error occurred while listing files.
+
+  ```json
+  {
+    "success": false,
+    "message": "Error listing files"
+  }
+  ```
+
+## Error Handling
+
+The API handles errors gracefully by returning appropriate HTTP status codes and error messages. Common errors include:
+
+- **400 Bad Request**: No file was uploaded.
+- **500 Internal Server Error**: An error occurred during file upload or retrieval.
+
+## Example API Request and Response
+
+### Example POST Request
+
+```typescript
+const formData = new FormData();
+formData.append('file', fileInput.files[0]);
+
+fetch('/api/upload', {
+  method: 'POST',
+  body: formData,
+})
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
+
+### Example GET Request
+
+```typescript
+fetch('/api/upload')
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
+
+This documentation provides a comprehensive guide to using the File Upload API Route, enabling developers to efficiently handle file uploads and manage uploaded files.
