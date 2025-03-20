@@ -1,0 +1,71 @@
+---
+title: "FileList Component"
+description: "Guide for using the FileList component to display uploaded files within the application."
+---
+
+## Component Overview
+
+The `FileList` component is designed to display a list of uploaded files within your application. It fetches file data from an API endpoint and presents it in a tabular format, allowing users to view and download files.
+
+The component handles loading states, error states, and provides functionality to refresh the file list.
+
+## Props and Methods
+
+The `FileList` component does not accept any props. It internally manages its state and lifecycle using React hooks.
+
+### Internal State
+
+- `files`: An array of `FileItem` objects representing the uploaded files.
+- `loading`: A boolean indicating whether the file data is currently being fetched.
+- `error`: A string that holds any error message encountered during the fetch operation.
+
+### Methods
+
+- `fetchFiles`: An asynchronous function that fetches the list of files from the `/api/upload` endpoint. It updates the `files`, `loading`, and `error` states based on the fetch result.
+
+### Helper Functions
+
+- `formatFileSize(bytes: number): string`: Formats the file size from bytes to a human-readable string.
+- `formatDate(dateString: string): string`: Formats the date string into a more readable format.
+
+## Usage Examples
+
+### Displaying a List of Files
+
+To use the `FileList` component, simply include it in your JSX. It will automatically fetch and display the list of files.
+
+```typescript
+import FileList from './components/FileList';
+
+const App = () => {
+  return (
+    <div>
+      <h1>Uploaded Files</h1>
+      <FileList />
+    </div>
+  );
+};
+
+export default App;
+```
+
+### Customizing File Display
+
+While the `FileList` component does not accept props for customization, you can modify the component directly to change styles or add additional functionality, such as custom actions for each file.
+
+## Component Structure
+
+The component renders a table with the following columns:
+
+- **Name**: The name of the file.
+- **Size**: The size of the file, formatted for readability.
+- **Uploaded**: The date and time when the file was uploaded.
+- **Action**: Links to view or download the file.
+
+### Error and Loading States
+
+- **Loading**: Displays a spinner and a loading message while files are being fetched.
+- **Error**: Displays an error message and a retry button if the fetch operation fails.
+- **No Files**: Displays a message indicating that no files have been uploaded if the file list is empty.
+
+The `FileList` component is a versatile tool for managing and displaying uploaded files, providing a user-friendly interface for file interaction.
