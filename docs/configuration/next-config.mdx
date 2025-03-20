@@ -1,0 +1,84 @@
+---
+title: "Next.js Configuration for File Upload"
+description: "Detailed explanation of the configuration settings in next.config.ts and file-manager/next.config.ts for setting up the file upload feature in a Next.js application."
+---
+
+## Configuration Overview
+
+In a Next.js application, configuration settings are crucial for enabling and optimizing various features. This documentation focuses on the configuration settings necessary for setting up the file upload feature using Next.js. The configuration is defined in two files: `next.config.ts` and `file-manager/next.config.ts`.
+
+## Key Settings
+
+### next.config.ts
+
+The `next.config.ts` file includes specific settings that are essential for handling file uploads efficiently:
+
+```typescript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ['formidable'],
+  },
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default nextConfig;
+```
+
+- **experimental.serverComponentsExternalPackages**: This setting allows the inclusion of external packages, such as `formidable`, which is used for parsing form data, including file uploads.
+
+- **api.bodyParser**: Setting `bodyParser` to `false` is necessary when handling file uploads manually. This disables Next.js's default body parsing, allowing you to use custom middleware like `formidable` for processing file uploads.
+
+### file-manager/next.config.ts
+
+The `file-manager/next.config.ts` file is a placeholder for additional configuration options specific to the file manager component of your application:
+
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+```
+
+This file can be extended with further configurations as needed for the file management functionality.
+
+## Environment Variables
+
+While the current configuration files do not explicitly use environment variables, it is common practice to manage sensitive information and environment-specific settings using environment variables. Ensure that any credentials or environment-specific configurations are stored securely and accessed via environment variables.
+
+## Examples
+
+### Sample Configuration File
+
+Below is a sample configuration file that combines the settings from both `next.config.ts` and `file-manager/next.config.ts`:
+
+```typescript
+// next.config.ts
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ['formidable'],
+  },
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default nextConfig;
+
+// file-manager/next.config.ts
+import type { NextConfig } from "next";
+
+const fileManagerConfig: NextConfig = {
+  /* additional config options for file manager */
+};
+
+export default fileManagerConfig;
+```
+
+This setup ensures that your Next.js application is configured to handle file uploads efficiently, with the flexibility to extend and customize the configuration as needed.
